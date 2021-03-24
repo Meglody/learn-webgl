@@ -1,10 +1,21 @@
 <template>
+  <img alt="Vue logo" src="../assets/logo.png" />
+    
   <h1>{{ msg }}</h1>
 
-  <p>
+  <!-- <p>
     <a href="https://vitejs.dev/guide/features.html" target="_blank">Vite Documentation</a> |
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
-  </p>
+  </p> -->
+
+  <ul>
+      <li>
+        <router-link to="/gl">web</router-link>
+      </li>
+      <li>
+        <router-link to="/star">star</router-link>
+      </li>
+  </ul>
 
   <button @click="state.count++">count is: {{ state.count }}</button>
   <p>
