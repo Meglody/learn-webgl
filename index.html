@@ -38,5 +38,38 @@
             // gl_FragColor = u_FlagColor;
         }
     </script>
+
+    <!-- 绘制三角面部分着色器 -->
+    <script id="drawTriangleVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        void main(){
+            gl_Position=a_Position;
+        }
+    </script>
+    <script id="drawTriangleFragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform vec4 u_FlagColor;
+        void main(){
+            gl_FragColor = u_FlagColor;
+        }
+    </script>
+
+
+    <!-- 鼠标绘制着色器 -->
+    <script id="mouseDrawVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        attribute float a_PointSize;
+        void main(){
+            gl_Position = a_Position;
+            gl_PointSize = 10.0;
+        }
+    </script>
+    <script id="mouseDrawFragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform vec4 u_FlagColor;
+        void main(){
+            gl_FragColor = vec4(1,1,0,1);
+        }
+    </script>
   </body>
 </html>

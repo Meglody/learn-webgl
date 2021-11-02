@@ -1,27 +1,13 @@
 <template>
-  <img alt="Vue logo" src="../assets/logo.png" />
-    
-  <h1>{{ msg }}</h1>
-
-  <!-- <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">Vite Documentation</a> |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
-  </p> -->
-
-  <ul>
-      <li>
-        <router-link to="/gl">web</router-link>
-      </li>
-      <li>
-        <router-link to="/star">star</router-link>
-      </li>
-  </ul>
-
-  <button @click="state.count++">count is: {{ state.count }}</button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
+  <h2>WEB_GL PRACTICE</h2>
+  <div class="home-wrapper flex-column">
+    <router-link to="/gl">绘制顶点</router-link>
+    <router-link to="/star">星空</router-link>
+    <router-link to="/multiPoints">绘制多点</router-link>
+    <router-link to="/drawLineAndTriangle">绘制三角形</router-link>
+    <router-link to="/drawRectangle">绘制矩形</router-link>
+    <router-link to="/drawByMouse">鼠标绘制点线</router-link>
+  </div>
 </template>
 
 <script setup>
@@ -37,5 +23,21 @@ const state = reactive({ count: 0 })
 <style scoped>
 a {
   color: #42b983;
+  margin-bottom: 20px;
 }
+</style>
+<style lang="stylus" scoped>
+.home-wrapper
+    margin 200px auto
+    padding 20px
+.flex-row
+    display flex
+    flex-wrap nowrap
+    flex-direction row
+    justify-content flex-start
+.flex-column
+    display flex
+    flex-wrap nowrap
+    flex-direction column
+    justify-content flex-start
 </style>
