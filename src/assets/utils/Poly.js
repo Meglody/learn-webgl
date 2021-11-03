@@ -51,10 +51,20 @@ class Poly {
             this.updateBuffer()
         }
     }
+    getLastVertice(){
+        return this.verticesOrigin[this.verticesOrigin.length - 1]
+    }
     setVertice(idx, vertexCoordinator){
         const {verticesOrigin} = this
-        if(verticesOrigin[idx] && verticesOrigin[idx].length == vertexCoordinator.length){
+        if(!verticesOrigin[idx]){
+            return
+        }
+        if(verticesOrigin[idx].length == vertexCoordinator.length){
             verticesOrigin[idx] = vertexCoordinator
+        }else if(vertexCoordinator.length < verticesOrigin[idx].length){
+            for(let i = 0 ; i < vertexCoordinator.length ; i++){
+                verticesOrigin[idx][i] = vertexCoordinator[i]
+            }
         }
         this.updateBuffer()
     }

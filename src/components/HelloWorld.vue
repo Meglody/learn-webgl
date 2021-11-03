@@ -7,6 +7,7 @@
     <router-link to="/drawLineAndTriangle">绘制三角形</router-link>
     <router-link to="/drawRectangle">绘制矩形</router-link>
     <router-link to="/drawByMouse">鼠标绘制点线</router-link>
+    <router-link to="/drawLeo">绘制狮子座</router-link>
   </div>
 </template>
 

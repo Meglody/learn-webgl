@@ -13,6 +13,7 @@ const router = createRouter({
         {path: '/drawLineAndTriangle', component: () => import('./views/drawLineAndTriangle.vue')},
         {path: '/drawRectangle', component: () => import('./views/drawRectangle.vue')},
         {path: '/drawByMouse', component: () => import('./views/drawByMouse.vue')},
+        {path: '/drawLeo', component: () => import('./views/drawLeo.vue')},
     ]
 })
 

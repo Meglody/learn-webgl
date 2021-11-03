@@ -1,8 +1,12 @@
+import { computed, reactive } from 'vue'
 export default class Track{
     constructor(target){
         this.parent = null
         // 轨道对象
-        this.target = target
+        this.target = reactive(target)
+        this.targetArr = computed(() => {
+            return Object.values(this.target)
+        })
         this.start = 0
         this.timeLen = 5
         this.keyMap = new Map()
