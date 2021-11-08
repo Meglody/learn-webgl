@@ -6,7 +6,7 @@
 <script setup>
 import { Color } from "https://unpkg.com/three/build/three.module.js";
 import useColor from '../assets/utils/colors'
-import useShader from '../assets/utils/shaders'
+import useShader from '../assets/utils/shaders-ts'
 import { defineProps, reactive, ref, onMounted, onUpdated, onUnmounted } from 'vue'
 // g_points储存顶点数据的数组
 const state = reactive({ count: 0, g_points: [] })
@@ -15,8 +15,8 @@ const canvas = ref(null);
 // 引入底色方法
 const {paintColor, paintRGBColor, paintColorAniSequence} = useColor
 // 获取着色器文本 (glsl es语言) 
-const vsSource = document.querySelector('#vertexShader').innerText
-const fsSource = document.querySelector('#fragmentShader').innerText
+const vsSource = document.querySelector('#vertexShader').textContent
+const fsSource = document.querySelector('#fragmentShader').textContent
 // 引入着色器编译器 解析着色器文本，整合到程序对象中，关联到webgl上下文对象中，实现两种语言的相互通信
 const {initShaders} = useShader
 onMounted(() => {

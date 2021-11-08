@@ -5,7 +5,7 @@
 </template>
 <script setup>
 import useColor from '../assets/utils/colors'
-import useShader from '../assets/utils/shaders'
+import useShader from '../assets/utils/shaders-ts'
 import { ref, onMounted, reactive, watch } from 'vue'
 import newPoly from '../assets/utils/newPoly';
 import Sky from '../assets/utils/Sky';
@@ -16,8 +16,8 @@ const leo = ref(null);
 // 引入底色方法
 const {paintColor} = useColor
 // 获取着色器文本 (glsl es语言) 
-const vsSource = document.querySelector('#leoVertexShader').innerText
-const fsSource = document.querySelector('#leoFragmentShader').innerText
+const vsSource = document.querySelector('#leoVertexShader').textContent
+const fsSource = document.querySelector('#leoFragmentShader').textContent
 // 引入着色器编译器 解析着色器文本，整合到程序对象中，关联到webgl上下文对象中，实现两种语言的相互通信
 const {initShaders} = useShader
 const nowPoly = ref(null)
@@ -106,7 +106,8 @@ const createPoly = (gl,x,y) => {
         ]),
         types: ['POINTS', 'LINE_STRIP'],
         size: 4,
-        attrName: 'a_Attr'
+        attrName: 'a_Attr',
+        circleDot: true
     })
     sky.value.add(nowPoly.value)
 }

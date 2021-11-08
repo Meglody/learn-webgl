@@ -8,6 +8,11 @@
     <router-link to="/drawRectangle">绘制矩形</router-link>
     <router-link to="/drawByMouse">鼠标绘制点线</router-link>
     <router-link to="/drawLeo">绘制狮子座</router-link>
+    <router-link to="/translation">位移</router-link>
+    <router-link to="/rotate">旋转</router-link>
+    <router-link to="/scale">缩放</router-link>
+    <router-link to="/multiMatrix">复合矩阵变换</router-link>
+    <router-link to="/viewMatrix">视图矩阵</router-link>
   </div>
 </template>
 

@@ -14,6 +14,12 @@ const router = createRouter({
         {path: '/drawRectangle', component: () => import('./views/drawRectangle.vue')},
         {path: '/drawByMouse', component: () => import('./views/drawByMouse.vue')},
         {path: '/drawLeo', component: () => import('./views/drawLeo.vue')},
+        {path: '/translation', component: () => import('./views/translation.vue')},
+        {path: '/rotate', component: () => import('./views/rotate.vue')},
+        {path: '/scale', component: () => import('./views/scale.vue')},
+        {path: '/matrics', component: () => import('./views/matrics.vue')},
+        {path: '/multiMatrix', component: () => import('./views/multiMatrix.vue')},
+        {path: '/viewMatrix', component: () => import('./views/viewMatrix.vue')},
     ]
 })
 

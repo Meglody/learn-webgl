@@ -5,7 +5,7 @@
 </template>
 <script setup>
 import useColor from '../assets/utils/colors'
-import useShader from '../assets/utils/shaders'
+import useShader from '../assets/utils/shaders-ts'
 import { defineProps, reactive, ref, onMounted, onUpdated, onUnmounted } from 'vue'
 import Compose from '../assets/utils/Compose'
 import Track from '../assets/utils/Track'
@@ -16,8 +16,8 @@ const stars = ref(null);
 // 引入底色方法
 const {paintColor} = useColor
 // 获取着色器文本 (glsl es语言) 
-const vsSource = document.querySelector('#vertexShader').innerText
-const fsSource = document.querySelector('#fragmentShader').innerText
+const vsSource = document.querySelector('#vertexShader').textContent
+const fsSource = document.querySelector('#fragmentShader').textContent
 // 引入着色器编译器 解析着色器文本，整合到程序对象中，关联到webgl上下文对象中，实现两种语言的相互通信
 const {initShaders} = useShader
 onMounted(() => {

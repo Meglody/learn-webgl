@@ -1,4 +1,4 @@
-const initShaders = (gl, vsSource, fsSource) => {
+const initShaders = (gl: WebGLRenderingContext & { program?: WebGLProgram }, vsSource: string, fsSource: string) : WebGLRenderingContext & { program: WebGLProgram } => {
     // 创建程序对象（编译，翻译js和glsl es语言的介质）
     const program = gl.createProgram()
     // 建立着色对象
@@ -13,10 +13,11 @@ const initShaders = (gl, vsSource, fsSource) => {
     // 启动程序对象
     gl.useProgram(program)
     // 将程序对象挂到gl上下文对象上
-    gl.program = program
-    return gl
+    const newgl = gl as WebGLRenderingContext & { program: WebGLProgram }
+    newgl.program = program
+    return newgl
 }
-const loadShader = (gl, shaderType, source) => {
+const loadShader = (gl: WebGLRenderingContext, shaderType: number, source: string) => {
     // 根据着色器类型，建立着色器对象
     const shader = gl.createShader(shaderType)
     // 将着色器源文件传入着色器对象中

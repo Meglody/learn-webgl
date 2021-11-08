@@ -7,6 +7,7 @@ const newPoly = (attr) => {
     const size =  attr.size || 2
     const attrName = attr.attrName || 'a_Position'
     const types = attr.types || ['POINTS']
+    const circleDot = attr.circleDot || false
     // 扁平处理的点位数据
     const vertices = computed(() => {
         return verticesOrigin.map(item => item.value).flat(Infinity)
@@ -45,8 +46,16 @@ const newPoly = (attr) => {
         updateBuffer()
     }
     const draw = () => {
-        for(let type of types){
-            gl.drawArrays(gl[type], 0, count.value)
+        if(circleDot){
+            const u_isPOINTS = gl.getUniformLocation(gl.program, 'u_isPOINTS')
+            for(let type of types){
+                gl.uniform1f(u_isPOINTS, type === 'POINTS')
+                gl.drawArrays(gl[type], 0, count.value)
+            }
+        }else{
+            for(let type of types){
+                gl.drawArrays(gl[type], 0, count.value)
+            }
         }
     }
     if(!gl){

@@ -84,16 +84,132 @@
     </script>
     <script id="leoFragmentShader" type="x-shader/x-fragment">
         precision mediump float;
+        uniform bool u_isPOINTS;
         varying float v_Alpha;
         void main(){
-            gl_FragColor = vec4(0.87, 0.91, 1.0, v_Alpha);
+            if(u_isPOINTS){
+                float dist = distance(gl_PointCoord, vec2(0.5, 0.5));
+                if(dist < 0.5){
+                    gl_FragColor = vec4(0.87, 0.91, 1.0, v_Alpha);
+                }else{
+                   discard;
+                }
+            }else{
+                gl_FragColor = vec4(0.87, 0.91, 1.0, v_Alpha);
+            }
+        }
+    </script>
 
-            //float dist = distance(gl_PointCoord, vec2(0.5, 0.5));
-            //if(dist < 0.5){
-            //    gl_FragColor = vec4(0.87, 0.91, 1.0, v_Alpha);
-            //}else{
-            //   discard;
-            //}
+    <!-- 位移 -->
+    <script id="translationVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        uniform vec4 a_Transition;
+        void main(){
+            gl_Position = a_Position + a_Transition;
+        }
+    </script>
+    <script id="translationFragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform vec4 u_FlagColor;
+        void main(){
+            gl_FragColor = vec4(0.87, 0.91, 1.0, 1.0);
+        }
+    </script>
+
+    <!--旋转 -->
+    <script id="rotateVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        uniform float u_CosB;
+        uniform float u_SinB;
+        void main(){
+            gl_Position.x = a_Position.x * u_CosB - a_Position.y * u_SinB;
+            gl_Position.y = a_Position.y * u_CosB + a_Position.x * u_SinB;
+            gl_Position.z = a_Position.z;
+            gl_Position.w = 1.0;
+        }
+    </script>
+    <script id="rotateFragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        void main(){
+            gl_FragColor = vec4(0.87, 0.91, 1.0, 1.0);
+        }
+    </script>
+
+
+    <!-- 缩放 -->
+    <script id="scaleVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        // 用于控制比例
+        attribute float u_Ratio;
+        // 缩放比例
+        uniform float u_Scale;
+        void main(){
+            gl_Position.x = a_Position.x * u_Scale;
+            gl_Position.y = a_Position.y * u_Scale * u_Ratio;
+            gl_Position.z = a_Position.z;
+            gl_Position.w = 1.0;
+        }
+    </script>
+    <script id="scaleFragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        void main(){
+            gl_FragColor = vec4(1, 1, 0, 1);
+        }
+    </script>
+
+
+    <!-- 矩阵 -->
+    <script id="matricsVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        attribute float u_Ratio;
+        uniform mat2 u_Matrix;
+        // uniform mat4 u_Matrix;
+        void main(){
+            gl_Position = vec4(
+                u_Matrix * vec2(a_Position),
+                a_Position.z, 1.0
+            );
+            //gl_Position = u_Matrix * a_Position;
+        }
+    </script>
+    <script id="matricsFragmentShader" type="x-shader/x-fragment">
+        void main(){
+            gl_FragColor = vec4(1, 1, 0, 1);
+        }
+    </script>
+
+    <!-- 复合矩阵 -->
+    <script id="multiMatrixVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        uniform mat4 u_Matrix;
+        void main(){
+            gl_Position = u_Matrix * a_Position;
+        }
+    </script>
+    <script id="multiMatrixFragmentShader" type="x-shader/x-fragment">
+        void main(){
+            gl_FragColor = vec4(1, 1, 0, 1);
+        }
+    </script>
+
+    <!-- 视图矩阵 -->
+    <script id="viewMatrixVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        // 用于控制比例
+        attribute float u_Ratio;
+        uniform mat4 u_ViewMatrix;
+        void main(){
+            gl_Position = u_ViewMatrix * vec4(
+                a_Position.x,
+                a_Position.y * u_Ratio,
+                a_Position.z,
+                1.0
+            );
+        }
+    </script>
+    <script id="viewMatrixFragmentShader" type="x-shader/x-fragment">
+        void main(){
+            gl_FragColor = vec4(1, 1, 0, 1);
         }
     </script>
   </body>
