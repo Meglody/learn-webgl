@@ -87,7 +87,7 @@ const updateVertices = (gl) => {
 }
 
 const animate = (gl) => {
-    offsetPhi.value += 0.03
+    offsetPhi.value += Math.random() * 0.1 + 0.03
     updateVertices(gl)
     requestAnimationFrame(() => animate(gl))
 }
