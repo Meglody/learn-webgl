@@ -14,6 +14,8 @@
     <router-link to="/multiMatrix">复合矩阵变换</router-link>
     <router-link to="/viewMatrix">视图矩阵</router-link>
     <router-link to="/wave">波浪</router-link>
+    <router-link to="/multiVertexWithDiffColor">多点异色绘制</router-link>
+    <router-link to="/waveColorful">彩色波浪</router-link>
   </div>
 </template>
 

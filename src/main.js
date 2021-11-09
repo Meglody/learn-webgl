@@ -21,6 +21,8 @@ const router = createRouter({
         {path: '/multiMatrix', component: () => import('./views/multiMatrix.vue')},
         {path: '/viewMatrix', component: () => import('./views/viewMatrix.vue')},
         {path: '/wave', component: () => import('./views/wave.vue')},
+        {path: '/multiVertexWithDiffColor', component: () => import('./views/multiVertexWithDiffColor.vue')},
+        {path: '/waveColorful', component: () => import('./views/waveColorful.vue')},
     ]
 })
 
