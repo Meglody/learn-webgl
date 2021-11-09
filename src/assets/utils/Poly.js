@@ -8,6 +8,7 @@ const defAttr = (attr) => {
         // 点位分量
         size: attr.size || 2,
         attrName: attr.attrName || 'a_Position',
+        uniforms: attr.uniforms || {},
         types: attr.types || ['POINTS']
     }
     // 扁平处理的点位数据
@@ -36,10 +37,24 @@ class Poly {
         const a_Position = gl.getAttribLocation(gl.program, attrName)
         gl.vertexAttribPointer(a_Position, size, gl.FLOAT, false, 0, 0)
         gl.enableVertexAttribArray(a_Position)
+        this.updateUniform()
     }
     updateBuffer(){
         const {gl, vertices} = this
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
+    }
+    updateUniform(){
+        const {gl, uniforms} = this
+        for(let uniform in uniforms){
+            const uniformName = uniform
+            const {type: uniformType, value: uniformValue} = uniforms[uniform]
+            const target = gl.getUniformLocation(gl.program, uniformName)
+            if(uniformType.includes('Matrix')){
+                gl[uniformType](target, false, uniformValue)
+            }else{
+                gl[uniformType](target, uniformValue)
+            }
+        }
     }
     addVertice(...params){
         this.verticesOrigin.push(...params)
@@ -71,7 +86,7 @@ class Poly {
     draw(types = this.types){
         const {gl, count} = this
         for(let type of types){
-            gl.drawArrays(gl[type], 0, count)
+            gl.drawArrays(gl[type], 0, count.value)
         }
     }
 }

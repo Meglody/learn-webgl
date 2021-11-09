@@ -212,5 +212,20 @@
             gl_FragColor = vec4(1, 1, 0, 1);
         }
     </script>
+
+    <!-- 波浪 -->
+    <script id="waveVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        uniform mat4 u_ViewMatrix;
+        void main(){
+            gl_Position = u_ViewMatrix * a_Position;
+            gl_PointSize = 3.0;
+        }
+    </script>
+    <script id="waveFragmentShader" type="x-shader/x-fragment">
+        void main(){
+            gl_FragColor = vec4(0, 1, 1, 1);
+        }
+    </script>
   </body>
 </html>

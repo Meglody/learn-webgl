@@ -8,6 +8,7 @@ const newPoly = (attr) => {
     const attrName = attr.attrName || 'a_Position'
     const types = attr.types || ['POINTS']
     const circleDot = attr.circleDot || false
+    const uniforms = attr.uniforms || {}
     // 扁平处理的点位数据
     const vertices = computed(() => {
         return verticesOrigin.map(item => item.value).flat(Infinity)
@@ -18,6 +19,18 @@ const newPoly = (attr) => {
     })
     const updateBuffer = () => {
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices.value), gl.STATIC_DRAW)
+    }
+    const updateUniforms = () => {
+        for(let uniform in uniforms){
+            const uniformName = uniform
+            const {type: uniformType, value: uniformValue} = uniforms[uniform]
+            const target = gl.getUniformLocation(gl.program, uniformName)
+            if(uniformType.includes('Matrix')){
+                gl[uniformType](target, false, uniformValue)
+            }else{
+                gl[uniformType](target, uniformValue)
+            }
+        }
     }
     const addVertice = (...params) => {
         verticesOrigin.push(...params)
@@ -67,6 +80,7 @@ const newPoly = (attr) => {
     const a_Position = gl.getAttribLocation(gl.program, attrName)
     gl.vertexAttribPointer(a_Position, size, gl.FLOAT, false, 0, 0)
     gl.enableVertexAttribArray(a_Position)
+    updateUniforms()
     return {
         gl,
         verticesOrigin: verticesOrigin,

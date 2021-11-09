@@ -13,6 +13,7 @@
     <router-link to="/scale">缩放</router-link>
     <router-link to="/multiMatrix">复合矩阵变换</router-link>
     <router-link to="/viewMatrix">视图矩阵</router-link>
+    <router-link to="/wave">波浪</router-link>
   </div>
 </template>
 

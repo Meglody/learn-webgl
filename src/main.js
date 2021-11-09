@@ -20,6 +20,7 @@ const router = createRouter({
         {path: '/matrics', component: () => import('./views/matrics.vue')},
         {path: '/multiMatrix', component: () => import('./views/multiMatrix.vue')},
         {path: '/viewMatrix', component: () => import('./views/viewMatrix.vue')},
+        {path: '/wave', component: () => import('./views/wave.vue')},
     ]
 })
 
