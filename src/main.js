@@ -23,6 +23,7 @@ const router = createRouter({
         {path: '/wave', component: () => import('./views/wave.vue')},
         {path: '/multiVertexWithDiffColor', component: () => import('./views/multiVertexWithDiffColor.vue')},
         {path: '/waveColorful', component: () => import('./views/waveColorful.vue')},
+        {path: '/textureBase', component: () => import('./views/textureBase.vue')},
     ]
 })
 
