@@ -37,7 +37,7 @@ a {
 </style>
 <style lang="stylus" scoped>
 .home-wrapper
-    margin 200px auto
+    margin 30px auto
     padding 20px
 .flex-row
     display flex

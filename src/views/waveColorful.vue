@@ -22,6 +22,8 @@ onMounted(() => {
     const vsSource = document.querySelector('#multiDiffColorVertexShader').textContent
     const fsSource = document.querySelector('#multiDiffColorFragmentShader').textContent
     const gl = initShaders(glContext, vsSource, fsSource)
+    gl.enable(gl.BLEND)
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE)
     render(gl)
     animate(gl)
 })
@@ -34,7 +36,7 @@ const [minAngleX, maxAngleX, minAngleZ, maxAngleZ] = [0, 4 * Math.PI, 0, 2 * Mat
 // y高度的极值
 const [minPosY, maxPosY] = [0.03, 0.13]
 // 色相的极值
-const [minH, maxH] = [0.7, 0.89]
+const [minH, maxH] = [0.45, 0.55]
 
 const scaleX = useScaleLinear(minPosX, minAngleX, maxPosX, maxAngleX)
 const scaleZ = useScaleLinear(minPosZ, minAngleZ, maxPosZ, maxAngleZ)
@@ -45,7 +47,7 @@ const scaleC = useScaleLinear(minPosY, minH, maxPosY, maxH)
 const color = ref<Color>(new Color())
 
 // 波浪对象的行数和烈属
-const [row, col] = [50, 50]
+const [row, col] = [40, 40]
 
 // 波浪对象的两个attribute变量，分别是位置、颜色
 const a_Position = {
@@ -90,10 +92,24 @@ const createSources = () => {
         for(let x = 0 ; x < col ; x++){
             const px = minPosX + x * spaceX
             const pz = minPosZ + z * spaceZ
-            source.push(ref([px, 0, pz, 1,1,1,1]))
+            source.push(ref([px, 0, pz, 1,1,1,0.5]))
         }
     }
-    return source
+    const sortedSource = []
+    const createTriangle = (index) => {
+        return [
+            source[index], source[index - col - 1], source[index - 1],
+            source[index], source[index - col] ,source[index - col - 1]
+        ]
+    }
+    for(let i = 0 ; i < source.length ; i++){
+        if(i > col - 1){
+            if(i % col !== 0){
+                sortedSource.push(...createTriangle(i))
+            }
+        }
+    }
+    return sortedSource
 }
 
 const offsetPhi = ref(0)
@@ -120,14 +136,17 @@ const updateVertices = (gl: WebGLRenderingContext & {
         gl.clearColor(0,0,0,1)
         gl.clear(gl.COLOR_BUFFER_BIT)
         wave.value.updateBuffer()
-        wave.value.draw()
+        // wave.value.draw()
+        // wave.value.draw(['LINES'])
+        // wave.value.draw(['TRIANGLES'])
+        wave.value.draw(['LINES','TRIANGLES'])
     }
 }
 
 const animate = (gl: WebGLRenderingContext & {
     program: WebGLProgram;
 }) => {
-    offsetPhi.value += 0.08
+    offsetPhi.value += 0.12
     updateVertices(gl)
     requestAnimationFrame(() => animate(gl))
 }

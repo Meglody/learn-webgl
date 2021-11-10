@@ -95,15 +95,29 @@ const newPoly = (attr: attrType) => {
         }
         updateBuffer()
     }
-    const draw = () => {
+    const draw = (userTypes: string[]) => {
         if(circleDot){
             const u_isPOINTS = gl.getUniformLocation(gl.program, 'u_isPOINTS')
+            if(userTypes){
+                for(let type of userTypes){
+                    // @ts-ignore
+                    gl.uniform1f(u_isPOINTS, type === 'POINTS')
+                    gl.drawArrays(gl[type], 0, count.value)
+                }
+                return
+            }
             for(let type of types){
                 // @ts-ignore
                 gl.uniform1f(u_isPOINTS, type === 'POINTS')
                 gl.drawArrays(gl[type], 0, count.value)
             }
         }else{
+            if(userTypes){
+                for(let type of userTypes){
+                    gl.drawArrays(gl[type], 0, count.value)
+                }
+                return
+            }
             for(let type of types){
                 gl.drawArrays(gl[type], 0, count.value)
             }
