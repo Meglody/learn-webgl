@@ -18,6 +18,7 @@
     <router-link to="/waveColorful">彩色波浪</router-link>
     <router-link to="/textureBase">纹理初级</router-link>
     <router-link to="/textureFilter">纹理初级</router-link>
+    <router-link to="/cubic">魔方案例</router-link>
   </div>
 </template>
 

@@ -25,6 +25,7 @@ const router = createRouter({
         {path: '/waveColorful', component: () => import('./views/waveColorful.vue')},
         {path: '/textureBase', component: () => import('./views/textureBase.vue')},
         {path: '/textureFilter', component: () => import('./views/textureFilter.vue')},
+        {path: '/cubic', component: () => import('./views/cubic.vue')},
     ]
 })
 
