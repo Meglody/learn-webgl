@@ -31,13 +31,13 @@ onMounted(async () => {
 const initVertex = (gl: WebGLRenderingContext & {
     program: WebGLProgram;
 }) => {
-    const maxT = 2
     const maxU = 2
+    const maxV = 2
     const source = new Float32Array([
-        -0.5, 0.5, 0, maxU,
+        -0.5, 0.5, 0, maxV,
         -0.5, -0.5, 0, 0,
-        0.5, 0.5, maxT, maxU,
-        0.5, -0.5, maxT, 0,
+        0.5, 0.5, maxU, maxV,
+        0.5, -0.5, maxU, 0,
     ])
 
     const elementBytes = source.BYTES_PER_ELEMENT
