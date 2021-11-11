@@ -17,6 +17,7 @@
     <router-link to="/multiVertexWithDiffColor">多点异色绘制</router-link>
     <router-link to="/waveColorful">彩色波浪</router-link>
     <router-link to="/textureBase">纹理初级</router-link>
+    <router-link to="/textureFilter">纹理初级</router-link>
   </div>
 </template>
 

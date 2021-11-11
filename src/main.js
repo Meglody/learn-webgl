@@ -24,6 +24,7 @@ const router = createRouter({
         {path: '/multiVertexWithDiffColor', component: () => import('./views/multiVertexWithDiffColor.vue')},
         {path: '/waveColorful', component: () => import('./views/waveColorful.vue')},
         {path: '/textureBase', component: () => import('./views/textureBase.vue')},
+        {path: '/textureFilter', component: () => import('./views/textureFilter.vue')},
     ]
 })
 
