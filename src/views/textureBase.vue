@@ -113,7 +113,7 @@ const initTexture = async (gl: WebGLRenderingContext & {
                 image
             )
 
-            // 纹理对象的其他参数
+            // 纹理对象的其他参数(修改纹理容器)
             gl.texParameteri(
                 // 纹理类型
                 gl.TEXTURE_2D,
