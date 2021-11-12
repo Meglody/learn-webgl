@@ -138,7 +138,7 @@ const initTexture = async (gl: WebGLRenderingContext & {
                 // 滤波器名：缩小滤波器
                 gl.TEXTURE_MIN_FILTER,
                 // 滤波器值(默认值：NEATEST_MIPMAP_LINEAR)
-                // 其余还有：LINEAR、NEAREST、NEATEST_MIPMAP_NEAREST、LINEAR_MIPMAP_LINEAR
+                // 其余还有：LINEAR、NEAREST、LINEAR_MIPMAP_NEATEST、NEATEST_MIPMAP_NEAREST、LINEAR_MIPMAP_LINEAR
                 // 注：使用MIPMAP分子贴图的，必须先设置分子贴图
                 gl.LINEAR
             )
