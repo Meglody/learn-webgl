@@ -22,6 +22,7 @@
     <router-link to="/textureMix">纹理混合</router-link>
     <router-link to="/textureTransformAnimation">纹理转场</router-link>
     <router-link to="/textureTransformMaskAnimation">换装达人</router-link>
+    <router-link to="/textureTransformMaskAnimation2">视频贴图</router-link>
   </div>
 </template>
 

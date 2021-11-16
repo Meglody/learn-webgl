@@ -108,7 +108,7 @@ const newPoly = (attr: attrType) => {
             gl.activeTexture(gl[`TEXTURE${idx}`])
             const texture = gl.createTexture()
             gl.bindTexture(gl.TEXTURE_2D, texture)
-            gl.texImage2D(
+            image && gl.texImage2D(
                 gl.TEXTURE_2D,
                 0,
                 format,
@@ -130,7 +130,7 @@ const newPoly = (attr: attrType) => {
                 if(wrapS === gl.CLAMP_TO_EDGE || wrapT === gl.CLAMP_TO_EDGE){
                     // 分子贴图看起来不能和CLAMP_TO_EDGE一起出现，会出错
                     throw new Error(`
-                    When using gl.TEXTURE_WRAP_S with CLAMP_TO_EDGE means that maybe you need to close mipmap: 
+                    When using gl.TEXTURE_WRAP_S/T with CLAMP_TO_EDGE means that maybe you need to close mipmap: 
                     Just use textureMinFilter with gl.LINEAR or gl.NEAREST and try again`)
                 }
                 gl.generateMipmap(gl.TEXTURE_2D)

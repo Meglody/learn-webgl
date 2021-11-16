@@ -365,6 +365,40 @@
             gl_FragColor = pattern_3 * originImage;
         }
     </script>
+
+    <!-- 视频贴图 -->
+    <script id="videoMaskAnimationVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        attribute vec2 a_Pin;
+        attribute vec2 a_videoPin;
+        varying vec2 v_Pin;
+        varying vec2 v_videoPin;
+        void main(){
+            gl_Position = a_Position;
+            v_Pin = a_Pin;
+            v_videoPin = a_videoPin;
+        }
+    </script>
+    <script id="videoMaskAnimationFragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform sampler2D u_Image;
+        uniform sampler2D u_Pattern_1;
+        uniform sampler2D u_Mask;
+        varying vec2 v_Pin;
+        varying vec2 v_videoPin;
+        void main(){
+            vec4 originImage = texture2D(u_Image, v_Pin);
+            vec4 pattern_1 = texture2D(u_Pattern_1, v_videoPin);
+            vec4 mask = texture2D(u_Mask, v_Pin);
+            // 混合纹理默认是全白
+            vec4 pattern_3 = vec4(1,1,1,1);
+            // 1是白色 0是黑色
+            if(mask.x > 0.5){
+                pattern_3 = pattern_1;
+            }
+            gl_FragColor = pattern_3 * originImage;
+        }
+    </script>
     
   </body>
 </html>

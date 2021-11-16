@@ -29,6 +29,7 @@ const router = createRouter({
         {path: '/textureMix', component: () => import('./views/textureMix.vue')},
         {path: '/textureTransformAnimation', component: () => import('./views/textureTransformAnimation.vue')},
         {path: '/textureTransformMaskAnimation', component: () => import('./views/textureTransformMaskAnimation.vue')},
+        {path: '/textureTransformMaskAnimation2', component: () => import('./views/textureTransformMaskAnimation2.vue')},
     ]
 })
 
