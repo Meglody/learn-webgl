@@ -127,6 +127,12 @@ const newPoly = (attr: attrType) => {
                 wrapT
             )
             if(!textureMinFilter || textureMinFilter > gl.LINEAR){
+                if(wrapS === gl.CLAMP_TO_EDGE || wrapT === gl.CLAMP_TO_EDGE){
+                    // 分子贴图看起来不能和CLAMP_TO_EDGE一起出现，会出错
+                    throw new Error(`
+                    When using gl.TEXTURE_WRAP_S with CLAMP_TO_EDGE means that maybe you need to close mipmap: 
+                    Just use textureMinFilter with gl.LINEAR or gl.NEAREST and try again`)
+                }
                 gl.generateMipmap(gl.TEXTURE_2D)
             }
             textureMinFilter && gl.texParameteri(

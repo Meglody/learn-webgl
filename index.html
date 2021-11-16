@@ -331,6 +331,40 @@
             gl_FragColor = mix(image, pattern, u_Alpha);
         }
     </script>
+
+    <!-- 换装达人 -->
+    <script id="textureTransformMaskAnimationVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        attribute vec2 a_Pin;
+        varying vec2 v_Pin;
+        void main(){
+            gl_Position = a_Position;
+            v_Pin = a_Pin;
+        }
+    </script>
+    <script id="textureTransformMaskAnimationFragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform sampler2D u_Image;
+        uniform sampler2D u_Pattern_1;
+        uniform sampler2D u_Pattern_2;
+        uniform sampler2D u_Mask;
+        uniform float u_Alpha;
+        varying vec2 v_Pin;
+        void main(){
+            vec4 originImage = texture2D(u_Image, v_Pin);
+            vec4 pattern_1 = texture2D(u_Pattern_1, v_Pin);
+            vec4 pattern_2 = texture2D(u_Pattern_2, v_Pin);
+            vec4 mask = texture2D(u_Mask, v_Pin);
+            // 混合纹理默认是全白
+            vec4 pattern_3 = vec4(1,1,1,1);
+            // 1是白色 0是黑色
+            // 混合纹理上将蒙板图片的黑色部分替换为pattern_1和pattern_2的混合纹理
+            if(mask.x > 0.5){
+                pattern_3 = mix(pattern_1, pattern_2, u_Alpha);
+            }
+            gl_FragColor = pattern_3 * originImage;
+        }
+    </script>
     
   </body>
 </html>
