@@ -26,6 +26,8 @@ const router = createRouter({
         {path: '/textureBase', component: () => import('./views/textureBase.vue')},
         {path: '/textureFilter', component: () => import('./views/textureFilter.vue')},
         {path: '/cubic', component: () => import('./views/cubic.vue')},
+        {path: '/textureMix', component: () => import('./views/textureMix.vue')},
+        {path: '/textureTransformAnimation', component: () => import('./views/textureTransformAnimation.vue')},
     ]
 })
 

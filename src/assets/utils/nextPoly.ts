@@ -3,7 +3,7 @@ import {Ref, ref, reactive, computed} from 'vue'
 interface uniformType {
     [key: string]: {
         type: string
-        value: number[]
+        value: number[] | number
     }
 }
 interface attributeType {
@@ -12,13 +12,24 @@ interface attributeType {
         index: number
     }
 }
+interface samplerType {
+    [key: string]: {
+        image: TexImageSource
+        format: number
+        wrapS?: number
+        wrapT?: number
+        textureMinFilter?: number
+        textureMagFilter?: number
+    }
+}
 interface attrType{
     gl: WebGLRenderingContext & {
         program: WebGLProgram;
     }
-    verticesOrigin: Ref<number>[]
+    verticesOrigin: Ref<number[]>[]
     size: number
-    uniforms: uniformType
+    uniforms?: uniformType
+    samplers?: samplerType
     attributes: attributeType
     types?: string[]
     circleDot?: boolean
@@ -29,7 +40,9 @@ const newPoly = (attr: attrType) => {
     const attributes = attr.attributes || {}
     const types = attr.types || ['POINTS']
     const circleDot = attr.circleDot || false
-    const uniforms = attr.uniforms || {}
+    let uniforms = attr.uniforms || {}
+    // 建议不超过8个
+    let samplers = attr.samplers
     // 扁平处理的点位数据
     const vertices = computed(() => {
         return verticesOrigin.map(item => item.value).flat(Infinity)
@@ -46,7 +59,10 @@ const newPoly = (attr: attrType) => {
     const updateBuffer = () => {
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices.value), gl.STATIC_DRAW)
     }
-    const updateUniforms = () => {
+    const updateUniforms = (unformsInject?: uniformType) => {
+        if(unformsInject){
+            uniforms = unformsInject
+        }
         for(let uniform in uniforms){
             const uniformName = uniform
             const {type: uniformType, value: uniformValue} = uniforms[uniform]
@@ -56,6 +72,93 @@ const newPoly = (attr: attrType) => {
             }else{
                 gl[uniformType](target, uniformValue)
             }
+        }
+        return {
+            gl,
+            verticesOrigin: verticesOrigin,
+            attributes,
+            uniforms,
+            samplers,
+            types,
+            vertices: vertices,
+            count: count,
+            updateBuffer,
+            updateUniforms,
+            updateSamplers,
+            addVertice,
+            popVertice,
+            getLastVertice,
+            setVertice,
+            draw
+        }
+    }
+    const updateSamplers = (samplersInject?: samplerType) => {
+        if(samplersInject){
+            samplers = samplersInject
+        }
+        Object.entries(samplers).forEach(([samplersKey, samplerValue], idx) => {
+            const {
+                image,
+                format,
+                wrapS,
+                wrapT,
+                textureMinFilter,
+                textureMagFilter,
+            } = samplerValue
+            gl.activeTexture(gl[`TEXTURE${idx}`])
+            const texture = gl.createTexture()
+            gl.bindTexture(gl.TEXTURE_2D, texture)
+            gl.texImage2D(
+                gl.TEXTURE_2D,
+                0,
+                format,
+                format,
+                gl.UNSIGNED_BYTE,
+                image
+            )
+            wrapS && gl.texParameteri(
+                gl.TEXTURE_2D,
+                gl.TEXTURE_WRAP_S,
+                wrapS
+            )
+            wrapT && gl.texParameteri(
+                gl.TEXTURE_2D,
+                gl.TEXTURE_WRAP_T,
+                wrapT
+            )
+            if(!textureMinFilter || textureMinFilter > gl.LINEAR){
+                gl.generateMipmap(gl.TEXTURE_2D)
+            }
+            textureMinFilter && gl.texParameteri(
+                gl.TEXTURE_2D,
+                gl.TEXTURE_MIN_FILTER,
+                textureMinFilter
+            )
+            textureMagFilter && gl.texParameteri(
+                gl.TEXTURE_2D,
+                gl.TEXTURE_MAG_FILTER,
+                textureMagFilter
+            )
+            const uniformVarable = gl.getUniformLocation(gl.program, samplersKey)
+            gl.uniform1i(uniformVarable, idx)
+        })
+        return {
+            gl,
+            verticesOrigin: verticesOrigin,
+            attributes,
+            uniforms,
+            samplers,
+            types,
+            vertices: vertices,
+            count: count,
+            updateBuffer,
+            updateUniforms,
+            updateSamplers,
+            addVertice,
+            popVertice,
+            getLastVertice,
+            setVertice,
+            draw
         }
     }
     const updateAttributes = () => {
@@ -95,7 +198,7 @@ const newPoly = (attr: attrType) => {
         }
         updateBuffer()
     }
-    const draw = (userTypes: string[]) => {
+    const draw = (userTypes?: string[]) => {
         if(circleDot){
             const u_isPOINTS = gl.getUniformLocation(gl.program, 'u_isPOINTS')
             if(userTypes){
@@ -130,16 +233,25 @@ const newPoly = (attr: attrType) => {
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
     updateBuffer()
     updateAttributes()
-    updateUniforms()
+    if(attr.uniforms){
+        updateUniforms()
+    }
+    if(attr.samplers){
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1)
+        updateSamplers()
+    }
     return {
         gl,
         verticesOrigin: verticesOrigin,
         attributes,
         uniforms,
+        samplers,
         types,
         vertices: vertices,
         count: count,
         updateBuffer,
+        updateUniforms,
+        updateSamplers,
         addVertice,
         popVertice,
         getLastVertice,

@@ -286,5 +286,51 @@
             gl_FragColor = texture2D(u_Sampler, v_Pin);
         }
     </script>
+
+    <!-- 纹理混合 -->
+    <script id="textureMixVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        attribute vec2 a_Pin;
+        varying vec2 v_Pin;
+        void main(){
+            gl_Position = a_Position;
+            v_Pin = a_Pin;
+        }
+    </script>
+    <script id="textureMixFragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform sampler2D u_Sampler;
+        uniform sampler2D u_Pattern;
+        varying vec2 v_Pin;
+        void main(){
+            vec4 image = texture2D(u_Sampler, v_Pin);
+            vec4 pattern = texture2D(u_Pattern, v_Pin);
+            gl_FragColor = mix(image, pattern, 0.2);
+        }
+    </script>
+
+    <!-- 纹理转场 -->
+    <script id="textureTransformAnimationVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        attribute vec2 a_Pin;
+        varying vec2 v_Pin;
+        void main(){
+            gl_Position = a_Position;
+            v_Pin = a_Pin;
+        }
+    </script>
+    <script id="textureTransformAnimationFragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform sampler2D u_Image;
+        uniform sampler2D u_Pattern;
+        uniform float u_Alpha;
+        varying vec2 v_Pin;
+        void main(){
+            vec4 image = texture2D(u_Image, v_Pin);
+            vec4 pattern = texture2D(u_Pattern, v_Pin);
+            gl_FragColor = mix(image, pattern, u_Alpha);
+        }
+    </script>
+    
   </body>
 </html>

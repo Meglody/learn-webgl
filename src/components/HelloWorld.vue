@@ -19,6 +19,8 @@
     <router-link to="/textureBase">纹理初级</router-link>
     <router-link to="/textureFilter">纹理初级</router-link>
     <router-link to="/cubic">魔方案例</router-link>
+    <router-link to="/textureMix">纹理混合</router-link>
+    <router-link to="/textureTransformAnimation">纹理转场</router-link>
   </div>
 </template>
 
