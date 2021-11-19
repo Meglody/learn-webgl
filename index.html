@@ -400,5 +400,69 @@
         }
     </script>
     
+    <!-- 调试/打印变量 -->
+    <script id="debugVertexShader" type="x-shader/x-vertex">
+        void main(){
+            gl_Position = vec4(0,0,0,1);
+            gl_PointSize = 512.0;
+        }
+    </script>
+    <script id="debugFragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        float f = 1.0;
+        int i = 2;
+        bool b = true;
+        vec4 v = vec4(f, i, b, 0);
+        mat4 m = mat4(
+            255,0,0,255,
+            255,255,0,255,
+            0,255,0,255,
+            0,0,255,255
+        );
+        void main(){
+            gl_FragColor = v / 255.0;
+        }
+    </script>
+
+    <!-- 调试/打印多个变量 -->
+    <script id="debugMultiVertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        void main(){
+            gl_Position = a_Position;
+        }
+    </script>
+    <script id="debugMultiFragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform vec2 u_CanvasSize;
+        float halfW = u_CanvasSize.x / 2.0;
+        float halfH = u_CanvasSize.y / 2.0;
+        mat4 m = mat4(
+            255,0,0,255,
+            255,255,0,255,
+            0,255,0,255,
+            0,0,255,255
+        );
+        void main(){
+            bool xb = halfW > gl_FragCoord.x;
+            bool yb = halfH > gl_FragCoord.y;
+            if(yb){
+                if(xb){
+                    // 左下
+                    gl_FragColor = m[0] / 255.0;
+                }else{
+                    // 右下
+                    gl_FragColor = m[1] / 255.0;
+                }
+            }else{
+                if(xb){
+                    // 左上
+                    gl_FragColor = m[2] / 255.0;
+                }else{
+                    // 右上
+                    gl_FragColor = m[3] / 255.0;
+                }
+            }
+        }
+    </script>
   </body>
 </html>

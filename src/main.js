@@ -30,6 +30,8 @@ const router = createRouter({
         {path: '/textureTransformAnimation', component: () => import('./views/textureTransformAnimation.vue')},
         {path: '/textureTransformMaskAnimation', component: () => import('./views/textureTransformMaskAnimation.vue')},
         {path: '/textureTransformMaskAnimation2', component: () => import('./views/textureTransformMaskAnimation2.vue')},
+        {path: '/console-debug', component: () => import('./views/GLSL/console-debug.vue')},
+        {path: '/console-debug-multi', component: () => import('./views/GLSL/console-debug-multi.vue')},
     ]
 })
 

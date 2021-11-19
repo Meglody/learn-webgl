@@ -23,6 +23,8 @@
     <router-link to="/textureTransformAnimation">纹理转场</router-link>
     <router-link to="/textureTransformMaskAnimation">换装达人</router-link>
     <router-link to="/textureTransformMaskAnimation2">视频贴图</router-link>
+    <router-link to="/console-debug">调试GLSL ES变量</router-link>
+    <router-link to="/console-debug-multi">调试多个GLSL ES变量</router-link>
   </div>
 </template>
 

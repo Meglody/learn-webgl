@@ -14,7 +14,8 @@ import useScaleLinear from '../assets/utils/scaleLinear'
 import useSin from '../assets/utils/sinFn'
 import dress from '../assets/image/dress.jpg'
 import mask from '../assets/image/mask-dress.jpg'
-import nichijou2 from '../assets/video/test.mp4'
+import test from '../assets/video/test.mp4'
+import cyber from '../assets/video/cyber.mp4'
 const canvasEl = ref<HTMLCanvasElement>()
 const {initShaders} = useShader
 const poly = ref()
@@ -28,7 +29,7 @@ onMounted(async () => {
     const {source} = initVertex(gl)
     await initTextures(gl, source)
     const videoEl = document.createElement('video')
-    videoEl.src = nichijou2
+    videoEl.src = test
     videoEl.autoplay = true
     videoEl.muted = true
     videoEl.loop = true
